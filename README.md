@@ -1,24 +1,305 @@
-Exploiting cross-site scripting to steal cookies
-sometime need use burb suite professional but this tool can use rather than upgrade it 
-INSTALL AND USE IT 
-go to vscode or nano in kali or Debian distribution ok, 
-LAB = "https://0acb00b903313953803dda0f005300c3.web-security-academy.net" but in session current and the post id you after this 
-will see the you cookies and the cookies for the victim man    
+# Exploiting Cross-Site Scripting to Steal Cookies
+<img width="624" height="96" alt="image" src="https://github.com/user-attachments/assets/b18ba8b7-bebd-4855-8262-0cd84e432bb4" />
+
+This guide demonstrates how to exploit a **Cross-Site Scripting (XSS)** vulnerability to obtain session cookies in a controlled **PortSwigger Web Security Academy lab** environment.
+
+> **Note:** This procedure is intended only for the authorized lab environment.
+
+## Requirements
+
+You can perform the lab using **Burp Suite Community Edition** or other suitable tools; **Burp Suite Professional is not strictly required**.
+
+You will also need:
+
+* Kali Linux or Debian-based Linux distribution
+* Python 3
+* VS Code or Nano
+* A browser
+* Cookie Editor browser extension
+* An active PortSwigger Web Security Academy lab
+
+---
+
+## 1. Open the Lab
+<img width="624" height="375" alt="image" src="https://github.com/user-attachments/assets/c16aae77-71d2-44d1-8cbb-bff0770a8bb8" />
+
+Open the assigned PortSwigger lab in your browser.
+
+Example:
+
+```text
+LAB_URL = "https://<YOUR-CURRENT-LAB-URL>"
+```
+<img width="624" height="56" alt="image" src="https://github.com/user-attachments/assets/9e85b719-f958-407e-941e-6d42ceae6e88" />
+
+**Important:** PortSwigger lab URLs can change between sessions. Always use the URL from your currently active lab.
+
+You will also need the ID of the vulnerable post:
+
+```text
 POST_ID = "8"
-python NAMEtool.py 
- python .\attack_collab_lab.py
+```
+
+Replace the value with the ID of the post you are testing.
+
+---
+
+## 2. Create the Python Tool
+
+Open the terminal in Kali Linux or Debian:
+
+```bash
+nano attack_collab_lab.py
+```
+
+Alternatively, open the file using VS Code:
+
+```bash
+code attack_collab_lab.py
+```
+
+Add your Python code to the file and save it.
+
+---
+
+## 3. Run the Tool
+
+Run the script with:
+
+```bash
+python3 attack_collab_lab.py
+```
+
+On Windows, if you are running the script from PowerShell, you may use:
+
+```powershell
+python .\attack_collab_lab.py
+```
+
+---
+<img width="624" height="152" alt="image" src="https://github.com/user-attachments/assets/adeed4c2-55e4-45ef-8679-dd0fe932de9d" />
+
+## 4. Lab Status Error
+
+You may receive an error similar to:
+
+```text
 [*] Lab check: 504
 [-] Lab is not available — reopen it in your browser and copy the new URL
-will see this error if you don't update the link
-<img width="871" height="172" alt="image" src="https://github.com/user-attachments/assets/aa07570f-40c3-453b-ba19-36de450d3a56" />
-use cokies editor 
-<img width="488" height="759" alt="image" src="https://github.com/user-attachments/assets/b9d5dfd1-373b-461a-9935-e75b533f1a79" />
-and edit the value in your page in put in cookies aditor 
-<img width="503" height="304" alt="image" src="https://github.com/user-attachments/assets/b4542d85-79f5-4123-b5e9-28114a2ff17e" />
+```
 
-<img width="1912" height="330" alt="image" src="https://github.com/user-attachments/assets/2e035ae1-203c-41dd-90da-c011bc79fdb7" />
-<img width="1248" height="189" alt="image" src="https://github.com/user-attachments/assets/179e2474-fcb5-4206-95a6-f697dee1e8b0" />
-after this image check in web site will get admin cookies 
-<img width="744" height="154" alt="image" src="https://github.com/user-attachments/assets/cabfe47c-4eb5-468f-aaa3-ea384bd44b70" />
+### Why does this happen?
 
+A `504` response can occur when the lab URL is no longer associated with your current active lab session.
+
+To fix it:
+
+1. Reopen the lab from PortSwigger Web Security Academy.
+2. Copy the **new lab URL**.
+3. Update the `LAB_URL` value in your Python script.
+4. Run the script again.
+
+Do not continue using an old lab URL after restarting the lab.
+
+---
+
+## 5. Using Cookie Editor
+<img width="475" height="782" alt="image" src="https://github.com/user-attachments/assets/6a4298e2-1b38-43db-b8b4-7191fbe16803" />
+
+
+For the lab demonstration, you can use a browser extension such as **Cookie Editor** to inspect and modify cookies in your own browser session.
+
+Open the Cookie Editor extension and select the domain of your active lab.
+
+You can then inspect the available cookies and their values.
+
+> Never use this technique against websites or accounts without explicit authorization.
+
+---
+
+## 6. Updating the Cookie Value
+
+If the lab requires you to modify a cookie value, copy the value provided by the lab or your own authorized test environment and update the corresponding cookie using Cookie Editor.
+
+After changing the cookie:
+
+1. Save the cookie.
+2. Refresh the lab page.
+3. Verify that the session is using the updated value.
+
+---
+
+## 7. Verify the Result
+
+After completing the XSS interaction in the authorized lab, check the output generated by your testing setup.
+
+If the lab successfully receives the expected request, you should see the corresponding result in the PortSwigger lab interface.
+
+For example:
+
+```text
+[*] XSS payload submitted
+[*] Waiting for interaction...
+[*] Interaction received
+[*] Lab condition satisfied
+```
+
+The exact output depends on the specific PortSwigger lab and the technique being demonstrated.
+
+---
+
+## Troubleshooting
+
+### Lab returns 504
+
+Make sure that:
+
+* The lab is currently active.
+* You copied the current lab URL.
+* You updated `LAB_URL` in the script.
+* You are not using an expired lab session.
+
+### Cookie changes are not visible
+
+Try:
+
+* Refreshing the page.
+* Checking that you are editing the correct domain.
+* Confirming that the cookie name is correct.
+* Removing an old test cookie before creating a new one.
+
+### Python script does not run
+
+Check your Python version:
+
+```bash
+python3 --version
+```
+
+Then make sure you are running the script from the directory containing it:
+
+```bash
+ls
+```
+
+You should see:
+
+```text
+attack_collab_lab.py
+```
+<img width="624" height="105" alt="image" src="https://github.com/user-attachments/assets/8e79faed-17be-4cba-b0dd-94c9e1c7ecd5" />
+
+<img width="624" height="249" alt="image" src="https://github.com/user-attachments/assets/79e5048d-6d94-4126-854e-5ef215c6aa7d" />
+<img width="465" height="696" alt="image" src="https://github.com/user-attachments/assets/69c52cd4-029f-4a63-af39-978b9d899e19" />
+
+<img width="624" height="301" alt="image" src="https://github.com/user-attachments/assets/b7e91b34-923c-498c-b3a5-1f3ef37183e2" />
+
+## Conclusion
+
+This lab demonstrates how an XSS vulnerability can interact with browser session information in a controlled environment.
+
+The most important point when working with PortSwigger labs is to use the **current lab URL and session**. If the lab is restarted, update the URL in your script before running it again.
+
+**Lab:** PortSwigger Web Security Academy
+**Topic:** Cross-Site Scripting (XSS)
+**Environment:** Authorized Web Security Academy LabExploiting Cross-Site Scripting to Steal Cookies
+This guide demonstrates how to exploit a Cross-Site Scripting (XSS) vulnerability to obtain session cookies in a controlled PortSwigger Web Security Academy lab environment.
+Note: This procedure is intended only for the authorized lab environment.
+Requirements
+You can perform the lab using Burp Suite Community Edition or other suitable tools; Burp Suite Professional is not strictly required.
+You will also need:
+•	Kali Linux or Debian-based Linux distribution
+•	Python 3
+•	VS Code or Nano
+•	A browser
+•	Cookie Editor browser extension
+•	An active PortSwigger Web Security Academy lab
+________________________________________
+1. Open the Lab
+Open the assigned PortSwigger lab in your browser.
+Example:
+LAB_URL = "https://<YOUR-CURRENT-LAB-URL>"
+Important: PortSwigger lab URLs can change between sessions. Always use the URL from your currently active lab.
+You will also need the ID of the vulnerable post:
+POST_ID = "8"
+Replace the value with the ID of the post you are testing.
+________________________________________
+2. Create the Python Tool
+Open the terminal in Kali Linux or Debian:
+nano attack_collab_lab.py
+Alternatively, open the file using VS Code:
+code attack_collab_lab.py
+Add your Python code to the file and save it.
+________________________________________
+3. Run the Tool
+Run the script with:
+python3 attack_collab_lab.py
+On Windows, if you are running the script from PowerShell, you may use:
+python .\attack_collab_lab.py
+________________________________________
+4. Lab Status Error
+You may receive an error similar to:
+[*] Lab check: 504
+[-] Lab is not available — reopen it in your browser and copy the new URL
+Why does this happen?
+A 504 response can occur when the lab URL is no longer associated with your current active lab session.
+To fix it:
+1.	Reopen the lab from PortSwigger Web Security Academy.
+2.	Copy the new lab URL.
+3.	Update the LAB_URL value in your Python script.
+4.	Run the script again.
+Do not continue using an old lab URL after restarting the lab.
+________________________________________
+5. Using Cookie Editor
+For the lab demonstration, you can use a browser extension such as Cookie Editor to inspect and modify cookies in your own browser session.
+Open the Cookie Editor extension and select the domain of your active lab.
+You can then inspect the available cookies and their values.
+Never use this technique against websites or accounts without explicit authorization.
+________________________________________
+6. Updating the Cookie Value
+If the lab requires you to modify a cookie value, copy the value provided by the lab or your own authorized test environment and update the corresponding cookie using Cookie Editor.
+After changing the cookie:
+1.	Save the cookie.
+2.	Refresh the lab page.
+3.	Verify that the session is using the updated value.
+________________________________________
+7. Verify the Result
+After completing the XSS interaction in the authorized lab, check the output generated by your testing setup.
+If the lab successfully receives the expected request, you should see the corresponding result in the PortSwigger lab interface.
+For example:
+[*] XSS payload submitted
+[*] Waiting for interaction...
+[*] Interaction received
+[*] Lab condition satisfied
+The exact output depends on the specific PortSwigger lab and the technique being demonstrated.
+________________________________________
+Troubleshooting
+Lab returns 504
+Make sure that:
+•	The lab is currently active.
+•	You copied the current lab URL.
+•	You updated LAB_URL in the script.
+•	You are not using an expired lab session.
+Cookie changes are not visible
+Try:
+•	Refreshing the page.
+•	Checking that you are editing the correct domain.
+•	Confirming that the cookie name is correct.
+•	Removing an old test cookie before creating a new one.
+Python script does not run
+Check your Python version:
+python3 --version
+Then make sure you are running the script from the directory containing it:
+ls
+You should see:
+attack_collab_lab.py
+Then run:
+python3 attack_collab_lab.py
+________________________________________
+Conclusion
+This lab demonstrates how an XSS vulnerability can interact with browser session information in a controlled environment.
+The most important point when working with PortSwigger labs is to use the current lab URL and session. If the lab is restarted, update the URL in your script before running it again.
+Lab: PortSwigger Web Security Academy
+Topic: Cross-Site Scripting (XSS)
+Environment: Authorized Web Security Academy Lab
 
